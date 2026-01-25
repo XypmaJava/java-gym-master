@@ -35,7 +35,11 @@ public class Timetable {
     }
 
     public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
-        return timetable.get(dayOfWeek).get(timeOfDay);
+        Map<TimeOfDay, List<TrainingSession>> daySessions = timetable.get(dayOfWeek);
+        if (daySessions == null) {
+            return Collections.emptyList();
+        }
+        return daySessions.getOrDefault(timeOfDay, Collections.emptyList());
     }
 
     public List<CounterOfTrainings> getCountByCoaches() {
